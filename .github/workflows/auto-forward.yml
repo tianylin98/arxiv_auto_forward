@@ -9,6 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout codes
+      uses: actions/checkout@v2
     - name: CrawArxiv
       run: curl https://arxiv.org/list/cs.CL/recent > ./arxiv.html
     - name: Setup Python
@@ -18,9 +20,9 @@ jobs:
     - name: SendMail
       run: python send_mail.py
       env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          PUSH_KEY: ${{ secrets.PUSH_KEY }}
+          USERNAME: ${{ secrets.SENDER_MAIL_USERNAME }}
+          PASSWORD: ${{ secrets.SENDER_MAIL_PASSWORD }}
+          RRCERVER: ${{ secrets.RECEIVER_ADDR }}
 #       uses: dawidd6/action-send-mail@v3
 #       with:
 #         server_address: smtp.office365.com
