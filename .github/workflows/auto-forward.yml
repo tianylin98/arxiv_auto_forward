@@ -6,17 +6,11 @@ on:
   workflow_dispatch:
   
 jobs:
-  get_arxiv:
+  build:
     runs-on: ubuntu-latest
     steps:
     - name: CrawArxiv
       run: curl https://arxiv.org/list/cs.CL/recent > ./arxiv.html
-      
-  send_mail:
-    runs-on: ubuntu-latest
-    needs: get_arxiv
-
-    steps:
     - name: SendMail
       uses: dawidd6/action-send-mail@v3
       with:
