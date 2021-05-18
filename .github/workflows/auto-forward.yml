@@ -18,12 +18,10 @@ jobs:
         server_port: 587
         username: ${{secrets.SENDER_MAIL_USERNAME}}
         password: ${{secrets.SENDER_MAIL_PASSWORD}}
-        subject: Axiv Auto-forward 
+        subject: Axiv Auto-forward ${{env.REPORT_DATE}})
         to: ${{secrets.RECEIVER_ADDR}}
         from: no-reply
-        secure: false
+        secure: true
         body: Arxiv from today
         html_body: file://arxiv.html
-        ignore_cert: true
-        convert_markdown: true
     
