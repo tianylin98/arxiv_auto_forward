@@ -11,17 +11,26 @@ jobs:
     steps:
     - name: CrawArxiv
       run: curl https://arxiv.org/list/cs.CL/recent > ./arxiv.html
-    - name: SendMail
-      uses: dawidd6/action-send-mail@v3
+    - name: Setup Python
+      uses: actions/setup-python@v2
       with:
-        server_address: smtp.office365.com
-        server_port: 587
-        username: ${{secrets.SENDER_MAIL_USERNAME}}
-        password: ${{secrets.SENDER_MAIL_PASSWORD}}
-        subject: Axiv Auto-forward ${{env.REPORT_DATE}})
-        to: ${{secrets.RECEIVER_ADDR}}
-        from: no-reply
-        secure: true
-        body: Arxiv from today
-        html_body: file://arxiv.html
+        python-version: '3.8'
+    - name: SendMail
+      run: python send_mail.py
+      env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
+#       uses: dawidd6/action-send-mail@v3
+#       with:
+#         server_address: smtp.office365.com
+#         server_port: 587
+#         username: ${{secrets.SENDER_MAIL_USERNAME}}
+#         password: ${{secrets.SENDER_MAIL_PASSWORD}}
+#         subject: Axiv Auto-forward ${{env.REPORT_DATE}})
+#         to: ${{secrets.RECEIVER_ADDR}}
+#         from: no-reply
+#         secure: true
+#         body: Arxiv from today
+#         html_body: file://arxiv.html
     
