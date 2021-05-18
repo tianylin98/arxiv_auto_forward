@@ -22,17 +22,7 @@ jobs:
       env:
           USERNAME: ${{ secrets.SENDER_MAIL_USERNAME }}
           PASSWORD: ${{ secrets.SENDER_MAIL_PASSWORD }}
-          RRCERVER: ${{ secrets.RECEIVER_ADDR }}
-#       uses: dawidd6/action-send-mail@v3
-#       with:
-#         server_address: smtp.office365.com
-#         server_port: 587
-#         username: ${{secrets.SENDER_MAIL_USERNAME}}
-#         password: ${{secrets.SENDER_MAIL_PASSWORD}}
-#         subject: Axiv Auto-forward ${{env.REPORT_DATE}})
-#         to: ${{secrets.RECEIVER_ADDR}}
-#         from: no-reply
-#         secure: true
-#         body: Arxiv from today
-#         html_body: file://arxiv.html
+          RRCERVERS: ${{ secrets.RECEIVER_ADDR }}
+          DATE: ${{env.REPORT_DATE}}
+
     
