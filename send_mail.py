@@ -15,7 +15,7 @@ port = 587
 sender = mail_user
 receivers = os.getenv("RECEIVERS").split(' ')
  
-mail_msg = open('./arxiv.html', 'utf-8').read()
+mail_msg = open('./arxiv.html', 'r').read()
 message = MIMEText(mail_msg, 'html', 'utf-8')
  
 subject = f'arxiv auto-forward {os.getenv("DATE")}'
