@@ -9,8 +9,8 @@ jobs:
   get_arxiv:
     runs-on: ubuntu-latest
     steps:
-    -name: CrawArxiv
-    run: curl https://arxiv.org/list/cs.CL/recent > ./arxiv.html
+    - name: CrawArxiv
+      run: curl https://arxiv.org/list/cs.CL/recent > ./arxiv.html
       
   send_mail:
     runs-on: ubuntu-latest
