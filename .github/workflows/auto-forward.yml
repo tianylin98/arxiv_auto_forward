@@ -21,8 +21,7 @@ jobs:
         subject: Axiv Auto-forward 
         to: ${{secrets.RECEIVER_ADDR}}
         from: no-reply
-#         secure: true
-        tls: false
+        secure: false
         body: Arxiv from today
         html_body: file://arxiv.html
         ignore_cert: true
