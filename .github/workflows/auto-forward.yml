@@ -22,7 +22,7 @@ jobs:
       env:
           USERNAME: ${{ secrets.SENDER_MAIL_USERNAME }}
           PASSWORD: ${{ secrets.SENDER_MAIL_PASSWORD }}
-          RRCERVERS: ${{ secrets.RECEIVER_ADDR }}
+          RECEIVERS: ${{ secrets.RECEIVER_ADDR }}
           DATE: ${{env.REPORT_DATE}}
 
     
