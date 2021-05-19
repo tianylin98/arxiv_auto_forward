@@ -22,7 +22,7 @@ def convert_field(entry):
     title = entry["title"]
     for highlight in config['highlights']:
       title = title.replace(highlight, f'<font color="#d00000"><b>{highlight}</b></font>')
-    new_entry['title'] = f'{entry["title"]} (<a href="{link}" target="_blank">link</a>)'
+    new_entry['title'] = f'{title} (<a href="{link}" target="_blank">link</a>)'
     new_entry.pop('link')
   return new_entry
 
