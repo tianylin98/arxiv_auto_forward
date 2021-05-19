@@ -22,6 +22,7 @@ for entry_obj in dom.getElementsByTagName('entry'):
  
 # print(entries)
 table = json2html.convert(json=entries)
+print(table)
 
 with open('./arxiv.html', 'w') as f:
   f.write(table)
