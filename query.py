@@ -18,7 +18,8 @@ map_attr = lambda x: attr_mapping[x] if x in attr_mapping else x
 def convert_field(entry):
   new_entry = entry.copy()
   if 'link' in entry:
-    new_entry['title'] = f'<a href="{entry['link']}" target="_blank">{entry['title']}</a>'
+    link = entry['link']
+    new_entry['title'] = f'<a href="{link}" target="_blank">{entry["title"]}</a>'
     new_entry.pop('title')
   return new_entry
 
