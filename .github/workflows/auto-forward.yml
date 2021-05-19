@@ -2,7 +2,7 @@ name: ArxivAutoForward
 
 on:
   schedule:
-    - cron: '30 18 * * *'
+    - cron: '00 04 * * *'
   workflow_dispatch:
   
 jobs:
