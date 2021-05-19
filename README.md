@@ -1,7 +1,7 @@
 # axiv_auto_forward
 
 Automatically gets Arxiv updates from predefined subject and send to your mailbox on a daily basis. It's for personal use, but anyone is welcom to use the code.
-(This repo is still under construction.)
+(This repo is still under construction. TODO: filter by date)
 
 ## Usage
 1. Fork this repo to your own account;
@@ -15,7 +15,8 @@ Automatically gets Arxiv updates from predefined subject and send to your mailbo
   {
     "subject": "cs.CL",
     "fields": ["id", "title", "name"],
-    "highlights": ["Transformer", "Attention"]
+    "highlights": ["Transformer", "Attention"],
+    "max_results": 30
   }
   ```
   The configuration means that I'm interested in `cs.CL` subject, and would like to highlight keywords "Transformer" and "Attention" in the titles.
