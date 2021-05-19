@@ -1,4 +1,4 @@
 {
   "subject": "cs.CL",
-  "fields": ["id", "title", "author"]
+  "fields": ["id", "title", "name"]
 }
