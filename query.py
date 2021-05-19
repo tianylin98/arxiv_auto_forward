@@ -1,6 +1,7 @@
 import urllib, urllib.request
 import json
 from xml.dom import minidom
+import json2html
 
 # query from arxiv, using offical query API: https://arxiv.org/help/api/user-manua
 config = json.load(open('config.json'))
@@ -19,7 +20,11 @@ for entry_obj in dom.getElementsByTagName('entry'):
       entry_obj.getElementsByTagName('published')[0].childNodes[0].nodeValue
     entries.append(entry)
  
-print(entries)
+# print(entries)
+table = json2html.convert(json=entries)
+
+with open('./arxiv.org', 'w') as f:
+  f.write(table)
   
     
 
