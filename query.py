@@ -16,10 +16,11 @@ attr_mapping = {'id': 'link', 'name': 'authors'}
 map_attr = lambda x: attr_mapping[x] if x in attr_mapping else x
 
 def convert_field(entry):
+  new_entry = entry.copy()
   if 'link' in entry:
-    id = entry['link']
-    entry['link'] = f'<a href="{id}" target="_blank">{id.split("/")[-1]}</a>'
-  return entry
+    new_entry['title'] = f'<a href="{entry['link']}" target="_blank">{entry['title']}</a>'
+    new_entry.pop('title')
+  return new_entry
 
 entries = []
 dom = minidom.parseString(data)
