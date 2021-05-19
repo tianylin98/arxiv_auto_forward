@@ -25,4 +25,4 @@ Automatically gets Arxiv updates from predefined subject and send to your mailbo
 ## Preview
 If everything is set appropriately, the mail you receive would look like this:
 
-![Preview of a sample email](https://github.com/boredtylin/arxiv_auto_forward/blob/master/preview.png)
+![Preview of a sample email](https://github.com/boredtylin/arxiv_auto_forward/blob/main/preview.png)
