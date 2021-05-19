@@ -1,4 +1,5 @@
 {
   "subject": "cs.CL",
   "fields": ["id", "title", "name"]
+  "highlights": ["Transformer", "Attention"]
 }
