@@ -20,7 +20,7 @@ def convert_field(entry):
   if 'link' in entry:
     link = entry['link']
     new_entry['title'] = f'<a href="{link}" target="_blank">{entry["title"]}</a>'
-    new_entry.pop('title')
+    new_entry.pop('link')
   return new_entry
 
 entries = []
