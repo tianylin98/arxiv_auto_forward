@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 import urllib, urllib.request
 import json
 from xml.dom import minidom
@@ -16,8 +18,8 @@ for entry_obj in dom.getElementsByTagName('entry'):
   for field in config['fields']:
     property_list = entry_obj.getElementsByTagName(field)
     entry[field] = ', '.join(map(lambda x: x.childNodes[0].nodeValue, property_list))
-    entry['update'] = entry_obj.getElementsByTagName('updated')[0].childNodes[0].nodeValue != \
-      entry_obj.getElementsByTagName('published')[0].childNodes[0].nodeValue
+    entry['update'] = '*' if entry_obj.getElementsByTagName('updated')[0].childNodes[0].nodeValue != \
+      entry_obj.getElementsByTagName('published')[0].childNodes[0].nodeValue else ' '
     entries.append(entry)
  
 # print(entries)
