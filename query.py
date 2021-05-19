@@ -19,6 +19,8 @@ def convert_field(entry):
   if link in entry:
     id = entry[link]
     entry[link] = f'<a href="{id}" target="_blank">{id.split("/")[-1]}</a>'
+  return entry
+
 entries = []
 dom = minidom.parseString(data)
 for entry_obj in dom.getElementsByTagName('entry'):
@@ -28,10 +30,10 @@ for entry_obj in dom.getElementsByTagName('entry'):
     entry[map_attr(field)] = ', '.join(map(lambda x: x.childNodes[0].nodeValue, property_list))
     entry['update'] = '*' if entry_obj.getElementsByTagName('updated')[0].childNodes[0].nodeValue != \
       entry_obj.getElementsByTagName('published')[0].childNodes[0].nodeValue else ' '
-    entries.append(entry)
+    entries.append(convert_field(entry))
  
 # print(entries)
-table = json2html.convert(json=entries, )
+table = json2html.convert(json=entries, table_attributes="class=\"table table-bordered table-hover\"")
 print(table)
 
 with open('./arxiv.html', 'w') as f:
