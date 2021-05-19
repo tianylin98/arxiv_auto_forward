@@ -16,9 +16,9 @@ attr_mapping = {'id': 'link', 'name': 'authors'}
 map_attr = lambda x: attr_mapping[x] if x in attr_mapping else x
 
 def convert_field(entry):
-  if link in entry:
-    id = entry[link]
-    entry[link] = f'<a href="{id}" target="_blank">{id.split("/")[-1]}</a>'
+  if 'link' in entry:
+    id = entry['link']
+    entry['link'] = f'<a href="{id}" target="_blank">{id.split("/")[-1]}</a>'
   return entry
 
 entries = []
