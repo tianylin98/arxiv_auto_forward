@@ -1,7 +1,7 @@
 import urllib, urllib.request
 import json
 from xml.dom import minidom
-import json2html
+from json2html import *
 
 # query from arxiv, using offical query API: https://arxiv.org/help/api/user-manua
 config = json.load(open('config.json'))
