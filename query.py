@@ -8,7 +8,7 @@ from json2html import *
 
 # query from arxiv, using offical query API: https://arxiv.org/help/api/user-manua
 config = json.load(open('config.json'))
-query = f"http://export.arxiv.org/api/query?search_query=all:{config['subject']}&id_list=&start=0&sortBy=lastUpdatedDate&sortOrder=descending&max_results=20"
+query = f"http://export.arxiv.org/api/query?search_query=all:{config['subject']}&id_list=&start=0&sortBy=lastUpdatedDate&sortOrder=descending&max_results=30"
 data = urllib.request.urlopen(query).read().decode('utf-8')
 
 # parse fetched results
@@ -33,7 +33,7 @@ for entry_obj in dom.getElementsByTagName('entry'):
   entries.append(convert_field(entry))
  
 # print(entries)
-table = json2html.convert(json=entries, table_attributes="class=\"table table-bordered table-hover\"")
+table = json2html.convert(json=entries, table_attributes="class=\"table table-bordered table-hover\"", escape=False)
 print(table)
 
 with open('./arxiv.html', 'w') as f:
