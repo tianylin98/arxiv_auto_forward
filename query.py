@@ -57,7 +57,7 @@ def convert_field(entry):
     title = title.replace(highlight, f'<font color="#d00000"><b>{highlight}</b></font>')
   entry['title'] = title
   id = entry['id']
-  entry['id'] = f'<a href="https://arxiv.org/abs/{id}" target="_blank">{id}</a>'
+  entry['id'] = f'<a href="{id}" target="_blank">{id.split("/")[-1]}</a>'
   return entry
 
 entries = []
