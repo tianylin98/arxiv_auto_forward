@@ -20,9 +20,9 @@ current_date = os.getenv("DATE")
 def start_date():
   today = datetime.strptime(current_date, '%Y-%m-%d')
   if today.weekday() == 1:
-    return today + timedelta(days = -4).strftime("%Y-%m-%d")
+    return (today + timedelta(days = -4)).strftime("%Y-%m-%d")
   else:
-    return today + timedelta(days = -2).strftime("%Y-%m-%d")
+    return (today + timedelta(days = -2)).strftime("%Y-%m-%d")
 start = start_date()
 
 # query = f"http://export.arxiv.org/api/query?search_query=all:{subject}&id_list=&start=0&sortBy=lastUpdatedDate&sortOrder=descending&max_results={max_results}"
