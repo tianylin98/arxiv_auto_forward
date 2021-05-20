@@ -56,6 +56,7 @@ def convert_field(entry):
   entry['title'] = title
   id = entry['id']
   entry['id'] = f'<a href="https://arxiv.org/abs/{id}" target="_blank">{id}</a>'
+  return entry
 
 entries = []
 dom = minidom.parseString(data)
