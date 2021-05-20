@@ -28,22 +28,19 @@ start = start_date()
 print(start, current_date)
 
 # query = f"http://export.arxiv.org/api/query?search_query=all:{subject}&id_list=&start=0&sortBy=lastUpdatedDate&sortOrder=descending&max_results={max_results}"
-query = f"http://export.arxiv.org/oai2?verb=ListRecords&from={start}&until={current_date}&metadataPrefix=arXiv&set={root_subject}"
+query = f"http://export.arxiv.org/oai2?verb=ListRecords&from={start}&until={current_date}&metadataPrefix=arXivRaw&set={root_subject}"
 
 data = urllib.request.urlopen(query).read().decode('utf-8')
 
 def parse_authors(entry_obj):
-  authors = []
-  for au in entry_obj.getElementsByTagName('author'):
-    authors.append(' '.join(map(lambda x: au.getElementsByTagName(x)[0].firstChild.nodeValue, ['forenames', 'keyname'])))
-  return ', '.join(authors)
+  return entry_obj.getElementsByTagName('authors')[0].firstChild.nodeValue
 
 def parse_title(entry_obj):
   title = entry_obj.getElementsByTagName('title')[0].firstChild.nodeValue
   return re.sub(r'\n\s+', ' ', title).strip()
 
 def parse_updated(entry_obj):
-  return len(entry_obj.getElementsByTagName('updated')) > 0
+  return len(entry_obj.getElementsByTagName('version')) > 1
 
 def parse_categories(entry_obj):
   return entry_obj.getElementsByTagName("categories")[0].firstChild.nodeValue
@@ -60,7 +57,7 @@ def convert_field(entry):
   entry['id'] = f'<a href="https://arxiv.org/abs/{id}" target="_blank">{id}</a>'
   return entry
 
-entries = []
+entries = {'new': [], 'updated': []}
 dom = minidom.parseString(data)
 for entry_obj in dom.getElementsByTagName('record'):
   if subject not in parse_categories(entry_obj):
@@ -69,8 +66,10 @@ for entry_obj in dom.getElementsByTagName('record'):
   entry['title'] = parse_title(entry_obj)
   entry['authors'] = parse_authors(entry_obj)
   entry['id'] = parse_id(entry_obj)
-  entry['update'] = '*' if parse_updated(entry_obj) else ' '
-  entries.append(convert_field(entry))
+  if not parse_updated(entry_obj):
+    entries['new'].append(convert_field(entry))
+  else:
+    entries['updated'].append(convert_field(entry))
 
 table = json2html.convert(json=entries, table_attributes="class=\"table table-bordered table-hover\"", escape=False)
 print(table)
