@@ -8,6 +8,8 @@ from datetime import datetime, date, timedelta
 from xml.dom import minidom
 from json2html import *
 
+MAX_RESULTS = 100
+
 # query from arxiv, using offical query API: https://arxiv.org/help/api/user-manual
 config = json.load(open('config.json'))
 subject = config['subject']
@@ -17,23 +19,25 @@ root_subject = subject.split('.')[0]
 
 current_date = os.getenv("DATE")
 
-def start_date():
+def start_time():
   today = datetime.strptime(current_date, '%Y-%m-%d')
   if today.weekday() == 1:
-    return (today + timedelta(days = -4)).strftime("%Y-%m-%d")
+    return (today + timedelta(days = -4)).strftime("%Y-%m-%dT18:00:00Z")
   else:
-    return (today + timedelta(days = -2)).strftime("%Y-%m-%d")
-start = start_date()
+    return (today + timedelta(days = -2)).strftime("%Y-%m-%dT18:00:00Z")
+
+start = start_time()
+
 
 print(start, current_date)
 
-# query = f"http://export.arxiv.org/api/query?search_query=all:{subject}&id_list=&start=0&sortBy=lastUpdatedDate&sortOrder=descending&max_results={max_results}"
-query = f"http://export.arxiv.org/oai2?verb=ListRecords&from={start}&until={current_date}&metadataPrefix=arXivRaw&set={root_subject}"
+query = f"http://export.arxiv.org/api/query?search_query=all:{subject}&id_list=&start=0&sortBy=lastUpdatedDate&sortOrder=descending&max_results={MAX_RESULTS}"
 
 data = urllib.request.urlopen(query).read().decode('utf-8')
 
 def parse_authors(entry_obj):
-  return entry_obj.getElementsByTagName('authors')[0].firstChild.nodeValue
+  return ', '.join(map(lambda x: x.childNodes[0].nodeValue, entry_obj.getElementsByTagName('name')))
+#   return entry_obj.getElementsByTagName('authors')[0].firstChild.nodeValue
 
 def parse_title(entry_obj):
   title = entry_obj.getElementsByTagName('title')[0].firstChild.nodeValue
@@ -55,26 +59,18 @@ def convert_field(entry):
   return entry
 
 def check_sub_date(entry_obj):
-  versions = entry_obj.getElementsByTagName("version")
-  for version in versions:
-    if version.getAttribute('version') == "v1":
-      sub_date = version.getElementsByTagName("date")[0].firstChild.nodeValue
-  sub_date = datetime.strptime(sub_date, "%a, %d %b %Y %H:%M:%S GMT")
-  return sub_date >= datetime.strptime(start, '%Y-%m-%d')
-
-def parse_updated(entry_obj):
-  return len(entry_obj.getElementsByTagName('version')) > 1
+  sub_date = entry_obj.getElementsByTagName("published")[0].firstChild.nodeValue
+  sub_date = datetime.strptime(sub_date, "%Y-%m-%dT%H:%M:%SZ")
+  return sub_date >= datetime.strptime(start, '%Y-%m-%dT%H:%M:%SZ')
 
 entries = []
 dom = minidom.parseString(data)
-for entry_obj in dom.getElementsByTagName('record'):
-  if subject not in parse_categories(entry_obj):
-    continue
+for entry_obj in dom.getElementsByTagName('entry'):
   entry = {}
   entry['title'] = parse_title(entry_obj)
   entry['authors'] = parse_authors(entry_obj)
   entry['id'] = parse_id(entry_obj)
-  if not parse_updated(entry_obj) and check_sub_date(entry_obj):
+  if check_sub_date(entry_obj):
     entries.append(convert_field(entry))
 
 table = json2html.convert(json=entries, table_attributes="class=\"table table-bordered table-hover\"", escape=False)
