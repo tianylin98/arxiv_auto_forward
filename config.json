@@ -1,6 +1,4 @@
 {
   "subject": "cs.CL",
-  "fields": ["id", "title", "name"],
-  "highlights": ["Transformer", "Attention"],
-  "max_results": 30
+  "highlights": ["Transformer", "Attention"]
 }
