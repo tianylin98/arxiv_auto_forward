@@ -41,7 +41,7 @@ def parse_title(entry_obj):
   return re.sub(r'\n\s+', ' ', title).strip()
 
 def parse_updated(entry_obj):
-  return len(set(map(lambda x: entry_obj.getElementsByTagName(x)[0].firstChild.nodeValue, ['created', 'updated']))) > 1
+  return len(entry_obj.getElementsByTagName('updated')) > 0
 
 def parse_categories(entry_obj):
   return entry_obj.getElementsByTagName("categories")[0].firstChild.nodeValue
