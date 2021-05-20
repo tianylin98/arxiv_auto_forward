@@ -21,7 +21,7 @@ current_date = os.getenv("DATE")
 
 def start_time():
   today = datetime.strptime(current_date, '%Y-%m-%d')
-  if today.weekday() == 1:
+  if today.weekday() in [0, 1]:
     return (today + timedelta(days = -4)).strftime("%Y-%m-%dT18:00:00Z")
   else:
     return (today + timedelta(days = -2)).strftime("%Y-%m-%dT18:00:00Z")
