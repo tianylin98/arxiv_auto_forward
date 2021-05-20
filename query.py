@@ -47,7 +47,7 @@ def parse_categories(entry_obj):
   return entry_obj.getElementsByTagName("categories")[0].firstChild.nodeValue
 
 def parse_id(entry_obj):
-  id = entry_obj.getElementsByTagName("id")[0].firstChild.nodeValue
+  return entry_obj.getElementsByTagName("id")[0].firstChild.nodeValue
   
 def convert_field(entry):
   title = entry['title']
