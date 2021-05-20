@@ -6,7 +6,7 @@ from xml.dom import minidom
 from json2html import *
 
 
-# query from arxiv, using offical query API: https://arxiv.org/help/api/user-manua
+# query from arxiv, using offical query API: https://arxiv.org/help/api/user-manual
 config = json.load(open('config.json'))
 query = f"http://export.arxiv.org/api/query?search_query=all:{config['subject']}&id_list=&start=0&sortBy=lastUpdatedDate&sortOrder=descending&max_results={config['max_results']}"
 data = urllib.request.urlopen(query).read().decode('utf-8')
