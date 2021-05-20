@@ -54,6 +54,7 @@ def convert_field(entry):
   for highlight in config['highlights']:
     title = title.replace(highlight, f'<font color="#d00000"><b>{highlight}</b></font>')
   entry['title'] = title
+  id = entry['id']
   entry['id'] = f'<a href="https://arxiv.org/abs/{id}" target="_blank">{id}</a>'
 
 entries = []
@@ -62,9 +63,9 @@ for entry_obj in dom.getElementsByTagName('record'):
   if subject not in parse_categories(entry_obj):
     continue
   entry = {}
-  entry['title'] = parse_authors(entry_obj)
+  entry['title'] = parse_title(entry_obj)
   entry['authors'] = parse_authors(entry_obj)
-  entry['authors'] = parse_id(entry_obj)
+  entry['id'] = parse_id(entry_obj)
   entry['update'] = '*' if parse_updated(entry_obj) else ' '
   entries.append(convert_field(entry))
 
