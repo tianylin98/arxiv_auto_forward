@@ -39,9 +39,6 @@ def parse_title(entry_obj):
   title = entry_obj.getElementsByTagName('title')[0].firstChild.nodeValue
   return re.sub(r'\n\s+', ' ', title).strip()
 
-def parse_updated(entry_obj):
-  return len(entry_obj.getElementsByTagName('version')) > 1
-
 def parse_categories(entry_obj):
   return entry_obj.getElementsByTagName("categories")[0].firstChild.nodeValue
 
@@ -57,7 +54,18 @@ def convert_field(entry):
   entry['id'] = f'<a href="https://arxiv.org/abs/{id}" target="_blank">{id}</a>'
   return entry
 
-entries = {'new': [], 'updated': []}
+def check_sub_date(entry_obj):
+  versions = entry_obj.getElementsByTagName("version")
+  for version in versions:
+    if version.getAttribute('version') == "v1":
+      sub_date = version.getElementsByTagName("date")[0].firstChild.nodeValue
+  sub_date = datetime.strptime(sub_date, "%a, %d %b %Y %H:%M:%S GMT")
+  return sub_date >= start
+
+def parse_updated(entry_obj):
+  return len(entry_obj.getElementsByTagName('version')) > 1
+
+entries = []
 dom = minidom.parseString(data)
 for entry_obj in dom.getElementsByTagName('record'):
   if subject not in parse_categories(entry_obj):
@@ -66,10 +74,8 @@ for entry_obj in dom.getElementsByTagName('record'):
   entry['title'] = parse_title(entry_obj)
   entry['authors'] = parse_authors(entry_obj)
   entry['id'] = parse_id(entry_obj)
-  if not parse_updated(entry_obj):
-    entries['new'].append(convert_field(entry))
-  else:
-    entries['updated'].append(convert_field(entry))
+  if not parse_updated(entry_obj) and check_sub_date((entry_obj):
+    entries.append(convert_field(entry))
 
 table = json2html.convert(json=entries, table_attributes="class=\"table table-bordered table-hover\"", escape=False)
 print(table)
