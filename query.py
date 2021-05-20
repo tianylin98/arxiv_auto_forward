@@ -74,7 +74,7 @@ for entry_obj in dom.getElementsByTagName('record'):
   entry['title'] = parse_title(entry_obj)
   entry['authors'] = parse_authors(entry_obj)
   entry['id'] = parse_id(entry_obj)
-  if not parse_updated(entry_obj) and check_sub_date((entry_obj):
+  if not parse_updated(entry_obj) and check_sub_date(entry_obj):
     entries.append(convert_field(entry))
 
 table = json2html.convert(json=entries, table_attributes="class=\"table table-bordered table-hover\"", escape=False)
