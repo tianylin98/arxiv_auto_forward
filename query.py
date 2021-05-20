@@ -60,7 +60,7 @@ def check_sub_date(entry_obj):
     if version.getAttribute('version') == "v1":
       sub_date = version.getElementsByTagName("date")[0].firstChild.nodeValue
   sub_date = datetime.strptime(sub_date, "%a, %d %b %Y %H:%M:%S GMT")
-  return sub_date >= start
+  return sub_date >= datetime.strptime(start, '%Y-%m-%d')
 
 def parse_updated(entry_obj):
   return len(entry_obj.getElementsByTagName('version')) > 1
