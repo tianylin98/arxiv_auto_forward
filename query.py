@@ -25,6 +25,8 @@ def start_date():
     return (today + timedelta(days = -2)).strftime("%Y-%m-%d")
 start = start_date()
 
+print(start, current_date)
+
 # query = f"http://export.arxiv.org/api/query?search_query=all:{subject}&id_list=&start=0&sortBy=lastUpdatedDate&sortOrder=descending&max_results={max_results}"
 query = f"http://export.arxiv.org/oai2?verb=ListRecords&from={start}&until={current_date}&metadataPrefix=arXiv&set={root_subject}"
 
