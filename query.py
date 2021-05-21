@@ -14,7 +14,6 @@ MAX_RESULTS = 100
 config = json.load(open('config.json'))
 subject = config['subject']
 highlights = config['highlights']
-max_results = config['max_results']
 root_subject = subject.split('.')[0]
 
 current_date = os.getenv("DATE")
